@@ -13,7 +13,9 @@ tlines = s_line.translate(string.maketrans("abcdefghij","0123456789"))
 tlines = list(tlines)
 
 for i,tline in enumerate(tlines):
-    if tlines[i] == "k":
+    if re.compile("0|1|2|3|4|5|6|7|8|9").search(tlines[i]):
+        pass
+    elif tlines[i] == "k":
         tlines[i] = "10"
     elif tlines[i] == "l":
         tlines[i] = "11"
@@ -53,12 +55,14 @@ for i,tline in enumerate(tlines):
         tlines[i] = "28"
     elif tlines[i] == ".":
         tlines[i] = "29"
-    elif tlines[i] == "?":
+    elif tlines[i] == ",":
         tlines[i] = "30"
     elif tlines[i] == "!":
         tlines[i] = "31"
+    else:
+        tlines[i] = "32"
 
-#print tlines
+print tlines
 
 print "How much move?"
 move = raw_input()
@@ -88,16 +92,21 @@ if dir > 0:
 else:
     strage = 25+dir
 
-schar = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','_','{','}','.','?','!']
+schar = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','_','{','}','.',',','!','?']
 
 for i,tline in enumerate(tlines):
     num = int(tlines[i])
+    print num
     s_num = 25-num
-
+    move = int(move)
+    
     if num > 25:
         tlines[i] = schar[num]
     elif dir > 0 and s_num < move:
         num -= (strage+1)
+        tlines[i] = schar[num]
+    elif dir < 0 and num < move:
+        num += strage
         tlines[i] = schar[num]
     else:
         num += dir
